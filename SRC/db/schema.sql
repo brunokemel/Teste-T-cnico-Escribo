@@ -1,6 +1,6 @@
 -- clientes table
 CREATE TABLE clientes (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id INT PRIMARY KEY gen_random_uuid(),
     nome VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     telefone VARCHAR(15),
@@ -23,4 +23,13 @@ CREATE TABLE pedidos (
     data_pedido TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     status VARCHAR(50) DEFAULT 'Pendente',
     FOREIGN KEY (cliente_id) REFERENCES clientes(id)
+);
+
+-- itens_pedido table
+CREATE TABLE itens_pedido (
+    id BIGSERIAL PRIMARY KEY,
+    pedido_id BIGINT REFERENCES pedidos(id) ON DELETE CASCADE,
+    produto_id BIGINT REFERENCES produtos(id),
+    quantidade INT NOT NULL,
+    preco_unitario DECIMAL(10,2) NOT NULL
 );
