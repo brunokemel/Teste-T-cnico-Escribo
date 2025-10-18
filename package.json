@@ -9,6 +9,7 @@
   },
   "devDependencies": {
     "@types/deno": "^2.5.0",
+    "@types/json2csv": "^5.0.7",
     "@types/node": "^24.8.1",
     "supabase": "^2.51.0",
     "ts-node": "^10.9.2",

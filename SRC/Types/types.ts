@@ -1,19 +1,33 @@
-// Tipagens das tabelas
-export type Pedido = {
-    id: number;
-    cliente_id: number;
-    criado_em: string;
+// src/types.ts
+export type Cliente = {
+  id: string;
+  nome: string;
+  email: string;
+  telefone?: string;
+  data_criacao: string;
 };
 
 export type Produto = {
-    id: number;
-    nome: string;
-    preco: number;
+  id: string;
+  nome: string;
+  descricao?: string;
+  preco: number;
+  estoque: number;
+  data_criacao: string;
+};
+
+export type Pedido = {
+  id: string;
+  cliente_id: string;
+  data_pedido: string;
+  status: string;
+  total: number;
 };
 
 export type ItemPedido = {
-    pedido_id: number;
-    produto_id: number;
-    quantidade: number;
-    preco_unitario: number;
+  id?: number;
+  pedido_id: string;
+  produto_id: string;
+  quantidade: number;
+  preco_unitario: number;
 };
