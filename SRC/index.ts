@@ -1,10 +1,12 @@
 import { createClient } from '@supabase/supabase-js';
 import dotenv from 'dotenv';
 import { Pedido } from './Types/types';
+ console.log('Iniciando o script...');
 
 dotenv.config();
 
-console.log('URL do Supabase:', process.env.SUPABASE_URL);
+console.log('SUPABASE_URL:', process.env.SUPABASE_URL);
+console.log('SERVICE_ROLE_KEY:', process.env.SUPABASE_SERVICE_ROLE_KEY);
 
 const supabase = createClient(
     process.env.SUPABASE_URL!,
@@ -68,6 +70,7 @@ export async function buscarNotificacoes() {
 // Exemplo de uso rápido
 // ==========================
 async function main() {
+    console.log('Entrou na main');
     try {
         // Criar pedido de exemplo
         const pedido = await criarPedido(1, [
