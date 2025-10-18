@@ -4,3 +4,6 @@ node_modules
 .branches/
 .temp/
 cli-latest
+
+# credenciais de ambiente
+*.env

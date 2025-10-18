@@ -1,7 +1,7 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import express, { Request, Response } from 'express';
 
-
-serve(async (req: Request) => {
+const app = express();
+app.post('/send-email', async (req: Request, res: Response) => {
   try {
     // Verifica se a requisição é POST
     if (req.method !== "POST") {
@@ -9,7 +9,7 @@ serve(async (req: Request) => {
     }
 
     // Verifica se o Content-Type é JSON
-    const contentType = req.headers.get("content-type") || "";
+    const contentType = req.headers['content-type'] || "";
     if (!contentType.includes("application/json")) {
       return new Response("Esperado application/json", { status: 400 });
     }
@@ -18,9 +18,13 @@ serve(async (req: Request) => {
 
     console.log(`Enviando e-mail de confirmação para ${email} (pedido #${pedido_id})`);
 
-    return new Response("E-mail enviado com sucesso!", { status: 200 });
+    return res.status(200).json({ message: "E-mail enviado com sucesso!" });
   } catch (err) {
     console.error(err);
-    return new Response("Erro ao processar requisição", { status: 500 });
+    return res.status(500).json({ message: "Erro ao processar requisição" });
   }
+});
+
+app.listen(3000, () => {
+  console.log('Server is running on port 3000');
 });

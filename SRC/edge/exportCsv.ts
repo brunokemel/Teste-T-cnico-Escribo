@@ -1,4 +1,4 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from "https://deno.land/std@0.201.0/http/server.ts";
 import { createClient } from "@supabase/supabase-js";
 import { Parser } from "https://esm.sh/json2csv@6.5.0";
 
