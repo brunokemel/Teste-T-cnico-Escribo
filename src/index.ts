@@ -1,8 +1,9 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import  { exportRouter }  from './edge/exportCsv';
-import { emailRouter } from './services/sendEmails';
-import { criarPedido } from './services/pedidos';
+import { exportRouter } from './edge/exportCsv';
+import { emailRouter } from './edge/sendEmail';
+import supabase from './db/supabase';
+import { criarPedido } from './edge/pedidos';
 
 dotenv.config();
 
@@ -15,14 +16,58 @@ app.use(emailRouter);
 
 app.listen(3000, () => console.log('Server running on port 3000'));
 
-// Exemplo de uso
+// ==========================
+// Script de inicialização automático
+// ==========================
 async function main() {
-  const pedido = await criarPedido('UUID_DO_CLIENTE_TESTE', [
-    { produto_id: 'UUID_PRODUTO_1', quantidade: 2 },
-    { produto_id: 'UUID_PRODUTO_2', quantidade: 1 },
-  ]);
+  console.log("=== Inicializando dados de teste ===");
 
-  if (pedido) console.log("Pedido criado:", pedido);
+  try {
+    // 1️⃣ Criar cliente de teste
+    let { data: clientes, error: clientesError } = await supabase
+      .from('clientes')
+      .select('*')
+      .eq('email', 'teste@teste.com');
+    
+    if (clientesError) throw clientesError;
+
+    let cliente = clientes?.[0];
+    if (!cliente) {
+      const { data: novoCliente, error: clienteError } = await supabase
+        .from('clientes')
+        .insert({ nome: 'Cliente Teste', email: 'teste@teste.com', telefone: '0000000000' })
+        .select()
+        .single();
+      if (clienteError) throw clienteError;
+      cliente = novoCliente;
+    }
+
+    // 2️⃣ Criar produtos de teste
+    let { data: produtos, error: produtosError } = await supabase.from('produtos').select('*');
+    if (produtosError) throw produtosError;
+
+    const produtosExistentes = produtos || [];
+    const produtoA = produtosExistentes.find(p => p.nome === 'Produto A') 
+      || (await supabase.from('produtos').insert({ nome: 'Produto A', preco: 10.5 }).select().single()).data;
+    const produtoB = produtosExistentes.find(p => p.nome === 'Produto B') 
+      || (await supabase.from('produtos').insert({ nome: 'Produto B', preco: 25 }).select().single()).data;
+
+    // 3️⃣ Criar pedido de teste
+    if (!criarPedido) throw new Error("Função criarPedido não encontrada");
+
+    const pedido = await criarPedido(cliente.id, [
+      { produto_id: produtoA.id, quantidade: 2 },
+      { produto_id: produtoB.id, quantidade: 1 }
+    ]);
+
+    if (pedido) console.log("Pedido criado com sucesso:", pedido);
+    else console.log("Falha ao criar pedido.");
+
+  } catch (err) {
+    console.error("Erro na inicialização:", err);
+  }
+
+  console.log("=== Inicialização concluída ===");
 }
 
 main();
