@@ -88,4 +88,4 @@ Este projeto é um exemplo de e-commerce desenvolvido com Node.js, TypeScript e 
 -Rollback: Para desabilitar o RLS, utilize os comandos DROP POLICY e ALTER TABLE ... DISABLE ROW LEVEL SECURITY.
 
 ## Conclusão
-O projeto demonstra a implementação de um e-commerce utilizando tecnologias modernas e práticas recomendadas de segurança e arquitetura. Usando as tecnologias pedidas na descrição do teste com **_uso de tabelas, Row-Level Security(RLS), funções no banco de dados, Criação de views e Edge Functions_**.
+O projeto demonstra a implementação de um e-commerce utilizando tecnologias modernas e práticas recomendadas de segurança e arquitetura. Usando as tecnologias pedidas na descrição do teste com **_uso de tabelas, Row-Level Security(RLS), funções no banco de dados, Criação de views e Edge Functions_**
