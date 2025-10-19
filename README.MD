@@ -92,7 +92,7 @@ Este projeto é um exemplo de e-commerce desenvolvido com Node.js, TypeScript e 
 ![Export Endpoint](Assets/testeExportarPedidos.png)
 
 ### Enviar E-mail
-![Send Email Endpoint](Assets/testeExportarPedidos.png)
+![Send Email Endpoint](Assets/testeEnviarEmail.png)
 
 
 ## Conclusão
