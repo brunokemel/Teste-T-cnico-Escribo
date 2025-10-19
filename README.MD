@@ -89,10 +89,10 @@ Este projeto é um exemplo de e-commerce desenvolvido com Node.js, TypeScript e 
 
 ## Testes feitos com _insomnia_
 ### Exportar Pedidos
-![Export Endpoint](Assets/testeExportar%20Pedidos.png)
+![Export Endpoint](Assets/testeExportarPedidos.png)
 
 ### Enviar E-mail
-![Send Email Endpoint](assets/testeEnviar%20E-mail.png)
+![Send Email Endpoint](assets/testeExportarPedidos.png)
 
 
 ## Conclusão
