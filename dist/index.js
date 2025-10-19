@@ -22,8 +22,10 @@ app.listen(3000, () => console.log('Server running on port 3000'));
 async function main() {
     console.log("=== Inicializando dados de teste ===");
     try {
+        // ==========================
         // 1️⃣ Criar cliente de teste
-        let { data: clientes, error: clientesError } = await supabase_1.default
+        // ==========================
+        const { data: clientes, error: clientesError } = await supabase_1.default
             .from('clientes')
             .select('*')
             .eq('email', 'teste@teste.com');
@@ -33,23 +35,52 @@ async function main() {
         if (!cliente) {
             const { data: novoCliente, error: clienteError } = await supabase_1.default
                 .from('clientes')
-                .insert({ nome: 'Cliente Teste', email: 'teste@teste.com', telefone: '0000000000' })
+                .insert({
+                nome: 'Cliente Teste',
+                email: 'teste@teste.com',
+                telefone: '0000000000'
+            })
                 .select()
                 .single();
             if (clienteError)
                 throw clienteError;
             cliente = novoCliente;
         }
+        console.log("Cliente pronto:", cliente);
+        // ==========================
         // 2️⃣ Criar produtos de teste
-        let { data: produtos, error: produtosError } = await supabase_1.default.from('produtos').select('*');
+        // ==========================
+        const { data: produtosExistentes, error: produtosError } = await supabase_1.default.from('produtos').select('*');
         if (produtosError)
             throw produtosError;
-        const produtosExistentes = produtos || [];
-        const produtoA = produtosExistentes.find(p => p.nome === 'Produto A')
-            || (await supabase_1.default.from('produtos').insert({ nome: 'Produto A', preco: 10.5 }).select().single()).data;
-        const produtoB = produtosExistentes.find(p => p.nome === 'Produto B')
-            || (await supabase_1.default.from('produtos').insert({ nome: 'Produto B', preco: 25 }).select().single()).data;
+        // Produto A
+        let produtoA = produtosExistentes?.find(p => p.nome === 'Produto A');
+        if (!produtoA) {
+            const { data: novoProdutoA, error: erroProdutoA } = await supabase_1.default
+                .from('produtos')
+                .insert({ nome: 'Produto A', preco: 10.5 })
+                .select()
+                .single();
+            if (erroProdutoA)
+                throw erroProdutoA;
+            produtoA = novoProdutoA;
+        }
+        // Produto B
+        let produtoB = produtosExistentes?.find(p => p.nome === 'Produto B');
+        if (!produtoB) {
+            const { data: novoProdutoB, error: erroProdutoB } = await supabase_1.default
+                .from('produtos')
+                .insert({ nome: 'Produto B', preco: 25 })
+                .select()
+                .single();
+            if (erroProdutoB)
+                throw erroProdutoB;
+            produtoB = novoProdutoB;
+        }
+        console.log("Produtos prontos:", produtoA, produtoB);
+        // ==========================
         // 3️⃣ Criar pedido de teste
+        // ==========================
         if (!pedidos_1.criarPedido)
             throw new Error("Função criarPedido não encontrada");
         const pedido = await (0, pedidos_1.criarPedido)(cliente.id, [

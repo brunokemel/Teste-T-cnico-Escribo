@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const supabase_js_1 = require("@supabase/supabase-js");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
-console.log('🔑 Supabase client iniciado com chave:', process.env.SUPABASE_SERVICE_ROLE_KEY?.slice(0, 12));
-const supabase = (0, supabase_js_1.createClient)(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY // ✅ Service role
+const supabase = (0, supabase_js_1.createClient)(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY // 🔑 ESSENCIAL
 );
 exports.default = supabase;

@@ -10,7 +10,7 @@ exportRouter.post('/export', async (req: Request, res: Response) => {
   if (!cliente_id) return res.status(400).json({ error: "cliente_id é obrigatório" });
 
   const { data, error } = await supabase
-    .from('vw_pedidos_detalhes')
+    .from('view_pedidos_detalhados')
     .select('*')
     .eq('cliente_id', cliente_id);
 
